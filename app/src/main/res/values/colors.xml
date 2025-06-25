@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="dark_background">#FF24273F</color>
+    <color name="dark_card_surface">#FF33364F</color>
+    <color name="primary_purple">#FF673AB7</color>
+    <color name="secondary_purple">#FF9C27B0</color>
+    <color name="text_light_gray">#B3FFFFFF</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+</resources>
