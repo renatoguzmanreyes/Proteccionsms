@@ -1,7 +1,6 @@
-package com.example.proteccionsms
+package com.example.proteccionsms // Originalmente, este era el paquete de la aplicación
 
 import org.junit.Test
-
 import org.junit.Assert.*
 
 /**

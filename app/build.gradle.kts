@@ -1,7 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose) // Este no lleva 'apply false'
+    // Asegúrate de que este plugin esté correctamente configurado en libs.versions.toml si lo usas con alias
+    // Si no, podría ser 'org.jetbrains.kotlin.android.compose' o 'kotlin-compose' directamente.
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
@@ -60,13 +62,20 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
 
     // Dependencia explícita para Material3, con una versión específica para asegurar compatibilidad
+    // Si usas el BOM, a menudo no necesitas especificar la versión aquí.
     implementation("androidx.compose.material3:material3:1.2.1")
 
     // Dependencia para los iconos extendidos de Material Design (Email, Notifications, Security)
     implementation("androidx.compose.material:material-icons-extended:1.6.8")
 
+    // >>>>>>> DEPENDENCIA CRUCIAL PARA OBSERVAR LIVEDATA EN COMPOSE <<<<<<<
+    // Necesaria para usar .observeAsState() con LiveData en funciones @Composable
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.8") // Versión compatible con Compose BOM 2023.08.00 o más reciente
+
     // >>>>>>> NUEVA DEPENDENCIA PARA COMPOSEN NAVIGATION <<<<<<<
-    implementation("androidx.navigation:navigation-compose:2.7.7") // Añade esta línea
+    // Esta dependencia está incluida, pero asegúrate de que tu código Compose (ej. DashboardScreen)
+    // realmente la esté utilizando para la navegación. Si no, puedes comentarla por ahora.
+    implementation("androidx.navigation:navigation-compose:2.7.7")
 
     // Dependencias de testing
     testImplementation(libs.junit)

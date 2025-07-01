@@ -13,6 +13,9 @@ object BlockedMessageCounter {
     // LiveData para el contador de notificaciones bloqueadas
     val blockedNotificationCount = MutableLiveData(0)
 
+    // Nuevo LiveData para el último mensaje de notificación
+    val lastNotificationMessage = MutableLiveData("Esperando Notificación...")
+
     /**
      * Incrementa el contador de SMS bloqueados.
      */

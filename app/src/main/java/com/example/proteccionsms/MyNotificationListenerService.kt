@@ -1,4 +1,4 @@
-package com.example.proteccionsms // Asegúrate de que este sea el nombre de tu paquete
+package com.example.proteccionsms // ¡CORREGIDO! Asegúrate de que este sea el nombre de tu paquete
 
 import android.content.Intent
 import android.service.notification.NotificationListenerService
@@ -14,6 +14,8 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject // Necesario para manejar JSON
+import kotlinx.coroutines.cancel // ¡IMPORTACIÓN AÑADIDA PARA LA FUNCIÓN CANCEL!
+import com.example.proteccionsms.BlockedMessageCounter // ¡CORREGIDO! Importación correcta para BlockedMessageCounter
 
 /**
  * Servicio que escucha las notificaciones del sistema.
@@ -52,7 +54,8 @@ class MyNotificationListenerService : NotificationListenerService() {
                 // Enviar un broadcast a la MainActivity para actualizar la UI con la última notificación.
                 // Asegurarse de que las actualizaciones de UI se envíen al hilo principal.
                 withContext(Dispatchers.Main) {
-                    val intent = Intent("com.example.proteccionsms.NOTIFICATION_RECEIVED_ACTION") // Usar el paquete correcto
+                    // Asegúrate de que el nombre del paquete en el Intent coincida con tu paquete principal
+                    val intent = Intent("com.example.proteccionsms.NOTIFICATION_RECEIVED_ACTION") // ¡CORREGIDO! Verifica este paquete
                     intent.putExtra("notification_text", notificationInfo)
                     sendBroadcast(intent)
                 }
@@ -147,4 +150,3 @@ class MyNotificationListenerService : NotificationListenerService() {
         }
     }
 }
-

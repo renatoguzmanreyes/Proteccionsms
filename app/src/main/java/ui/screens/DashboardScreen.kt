@@ -19,6 +19,8 @@ import androidx.compose.ui.graphics.Color // Para usar colores directamente
 // >>> Nuevas importaciones para el scroll <<<
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.filled.Message // Icono para el último SMS
+import androidx.compose.material.icons.filled.Info // Icono para la última notificación
 
 // -----------------------------------------------------------
 // Pantalla Principal del Dashboard
@@ -27,6 +29,8 @@ import androidx.compose.foundation.verticalScroll
 fun DashboardScreen(
     smsBlockedCount: Int,
     notificationsInterceptedCount: Int,
+    lastSmsMessage: String, // Nuevo parámetro para el último SMS
+    lastNotificationMessage: String, // Nuevo parámetro para la última notificación
     onViewSmsLog: () -> Unit, // Callback para navegar al log de SMS
     onViewNotificationLog: () -> Unit, // Callback para navegar al log de Notificaciones
     modifier: Modifier = Modifier
@@ -59,6 +63,26 @@ fun DashboardScreen(
             icon = Icons.Default.Notifications, // Icono de Material Design para Notificaciones
             buttonText = "Ver Registro",
             onButtonClick = onViewNotificationLog // Pasamos el callback
+        )
+
+        // Último SMS Recibido Card
+        DashboardCard(
+            title = "Último SMS",
+            value = lastSmsMessage, // Mostrar el contenido del último SMS
+            description = "Contenido del último mensaje SMS recibido.",
+            icon = Icons.Default.Message, // Icono para el último SMS
+            buttonText = null,
+            onButtonClick = null
+        )
+
+        // Última Notificación Recibida Card
+        DashboardCard(
+            title = "Última Notificación",
+            value = lastNotificationMessage, // Mostrar el contenido de la última notificación
+            description = "Contenido de la última notificación interceptada.",
+            icon = Icons.Default.Info, // Icono para la última notificación
+            buttonText = null,
+            onButtonClick = null
         )
 
         // Protección Activa Card (como en tu código React)
@@ -148,6 +172,8 @@ fun DashboardScreenPreview() {
         DashboardScreen(
             smsBlockedCount = 123,
             notificationsInterceptedCount = 45,
+            lastSmsMessage = "Este es un SMS de prueba.", // Valor de ejemplo para el preview
+            lastNotificationMessage = "Esta es una notificación de prueba.", // Valor de ejemplo para el preview
             onViewSmsLog = {}, // Acciones vacías para el preview
             onViewNotificationLog = {} // Acciones vacías para el preview
         )
