@@ -1,3 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Proteccion sms</string>
+    <!-- Etiqueta para el servicio de escucha de notificaciones, visible en la configuración del sistema -->
+    <string name="notification_listener_service_label">Protección de Notificaciones</string>
 </resources>
+

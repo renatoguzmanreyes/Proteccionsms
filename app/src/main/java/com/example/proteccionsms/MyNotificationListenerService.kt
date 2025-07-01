@@ -1,4 +1,4 @@
-package com.example.demomysmsapp
+package com.example.proteccionsms // Asegúrate de que este sea el nombre de tu paquete
 
 import android.content.Intent
 import android.service.notification.NotificationListenerService
@@ -52,7 +52,7 @@ class MyNotificationListenerService : NotificationListenerService() {
                 // Enviar un broadcast a la MainActivity para actualizar la UI con la última notificación.
                 // Asegurarse de que las actualizaciones de UI se envíen al hilo principal.
                 withContext(Dispatchers.Main) {
-                    val intent = Intent("com.example.demomysmsapp.NOTIFICATION_RECEIVED_ACTION")
+                    val intent = Intent("com.example.proteccionsms.NOTIFICATION_RECEIVED_ACTION") // Usar el paquete correcto
                     intent.putExtra("notification_text", notificationInfo)
                     sendBroadcast(intent)
                 }
