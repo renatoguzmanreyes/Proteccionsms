@@ -2,9 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Permiso para acceder a Internet (para la API de detección de phishing) -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <!-- Permisos para leer y recibir SMS -->
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
 
@@ -30,7 +28,6 @@
             </intent-filter>
         </activity>
 
-        <!-- Declaración del BroadcastReceiver para SMS -->
         <receiver
             android:name=".SmsReceiver"
             android:exported="true"
@@ -40,7 +37,6 @@
             </intent-filter>
         </receiver>
 
-        <!-- Declaración del NotificationListenerService -->
         <service
             android:name=".MyNotificationListenerService"
             android:label="@string/notification_listener_service_label"

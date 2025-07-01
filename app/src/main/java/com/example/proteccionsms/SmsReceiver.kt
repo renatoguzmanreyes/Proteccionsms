@@ -1,4 +1,4 @@
-package com.example.demomysmsapp
+package com.example.proteccionsms // Asegúrate de que este sea el nombre de tu paquete
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -26,17 +26,17 @@ class SmsReceiver : BroadcastReceiver() {
                 val sender = smsMessage.displayOriginatingAddress
                 val messageBody = smsMessage.displayMessageBody
                 val fullSms = "De: $sender, Mensaje: $messageBody"
-                Log.d("SmsReceiver", "SMS Recibido: $fullSms")
+                Log.d("SmsReceiver", "SMS Received: $fullSms") // Mensaje de log en inglés
 
-                // Actualizar LiveData para la UI con el último SMS
+                // Update LiveData for the UI with the latest SMS
                 lastSmsMessage.postValue(fullSms)
 
-                // Lógica para bloquear SMS (smishing)
+                // Logic to block SMS (smishing)
                 if (shouldBlockSms(sender, messageBody)) {
-                    Log.d("SmsReceiver", "SMS bloqueado (Phishing): $fullSms")
-                    BlockedMessageCounter.incrementBlockedSmsCount() // Usar el nuevo contador
-                    // Si deseas ABORTAR el broadcast para que otras apps (incluida la default SMS) no lo reciban,
-                    // descomenta la siguiente línea. Úsala con EXTREMA PRECAUCIÓN y solo si tu app es la default SMS.
+                    Log.d("SmsReceiver", "SMS Blocked (Phishing): $fullSms") // Mensaje de log en inglés
+                    BlockedMessageCounter.incrementBlockedSmsCount() // Use the correct counter
+                    // If you want to ABORT the broadcast so other apps (including the default SMS app) don't receive it,
+                    // uncomment the following line. Use it with EXTREME CAUTION and only if your app is the default SMS app.
                     // abortBroadcast()
                 }
             }
@@ -44,14 +44,14 @@ class SmsReceiver : BroadcastReceiver() {
     }
 
     /**
-     * Determina si un SMS debe ser bloqueado basándose en el remitente o el contenido.
-     * Aquí se implementa la lógica de detección de smishing.
-     * @param sender El número de teléfono o nombre del remitente.
-     * @param messageBody El cuerpo del mensaje SMS.
-     * @return true si el SMS debe ser bloqueado, false en caso contrario.
+     * Determines if an SMS should be blocked based on the sender or content.
+     * Here, the smishing detection logic is implemented.
+     * @param sender The phone number or name of the sender.
+     * @param messageBody The body of the SMS message.
+     * @return true if the SMS should be blocked, false otherwise.
      */
     private fun shouldBlockSms(sender: String, messageBody: String): Boolean {
-        // Lista de palabras clave comunes en ataques de smishing (puedes expandirla)
+        // List of common smishing keywords (you can expand this)
         val phishingKeywords = listOf(
             "actualice su informacion", "su cuenta ha sido bloqueada", "verifique su identidad",
             "ganador de la loteria", "premio", "haga clic aqui", "urgente", "suspension",
@@ -61,12 +61,12 @@ class SmsReceiver : BroadcastReceiver() {
             "confirmar datos", "inicia sesion", "verificacion de seguridad"
         )
 
-        // Verificar si el mensaje contiene alguna palabra clave de phishing (ignorando mayúsculas/minúsculas)
+        // Check if the message contains any phishing keyword (ignoring case)
         if (phishingKeywords.any { messageBody.contains(it, ignoreCase = true) }) {
             return true
         }
 
-        // Puedes añadir lógica para remitentes específicos (ej. números desconocidos, remitentes sospechosos)
+        // You can add logic for specific senders (e.g., unknown numbers, suspicious senders)
         // if (sender == "5551234" || sender.contains("soporte", ignoreCase = true)) {
         //     return true
         // }
