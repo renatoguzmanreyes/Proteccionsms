@@ -78,4 +78,11 @@ dependencies {
     // Herramientas de depuración para Compose UI (útiles para previsualizaciones en Android Studio)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Para peticiones de red (OkHttp)
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
+    // Para Kotlin Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 }
