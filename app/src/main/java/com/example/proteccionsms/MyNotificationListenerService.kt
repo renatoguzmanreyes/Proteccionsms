@@ -34,7 +34,7 @@ class MyNotificationListenerService : NotificationListenerService() {
 
     override fun onNotificationPosted(sbn: StatusBarNotification?) {
         sbn?.let {
-            val packageName = it.packageName
+            val packageName = it.packageName // Se mantiene aquí si se necesita para logs o futuras funcionalidades
             // Extraer el título y el texto de la notificación
             val title = it.notification.extras.getString("android.title") ?: ""
             val text = it.notification.extras.getString("android.text") ?: ""
@@ -45,7 +45,8 @@ class MyNotificationListenerService : NotificationListenerService() {
             // Lanzar una corrutina para realizar la detección de phishing, incluyendo la llamada a la API.
             // Las operaciones de red no pueden ejecutarse en el hilo principal (UI thread).
             serviceScope.launch {
-                val isPhishing = shouldBlockNotification(packageName, title, text)
+                // Se elimina 'packageName' de la llamada a shouldBlockNotification
+                val isPhishing = shouldBlockNotification(title, text)
                 if (isPhishing) {
                     Log.d("NotificationListener", "Notificación bloqueada (Phishing): $notificationInfo")
                     BlockedMessageCounter.incrementBlockedNotificationCount() // Incrementar contador de notificaciones bloqueadas
@@ -83,12 +84,11 @@ class MyNotificationListenerService : NotificationListenerService() {
      * Determina si una notificación debe ser considerada phishing.
      * Incluye detección por palabras clave locales y verificación a través de una API externa.
      * Esta función es 'suspend' porque realiza una operación de red asíncrona.
-     * @param packageName El nombre del paquete de la aplicación que envió la notificación.
      * @param title El título de la notificación.
      * @param text El texto principal de la notificación.
      * @return true si la notificación contiene palabras clave de phishing o es marcada como maliciosa por la API, false en caso contrario.
      */
-    private suspend fun shouldBlockNotification(packageName: String, title: String, text: String): Boolean {
+    private suspend fun shouldBlockNotification(title: String, text: String): Boolean { // Se elimina 'packageName' del parámetro
         // Lista de palabras clave comunes en ataques de phishing (puedes expandirla)
         val phishingKeywords = listOf(
             "actualice su informacion", "su cuenta ha sido bloqueada", "verifique su identidad",
