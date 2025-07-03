@@ -1,4 +1,4 @@
-package com.example.proteccionsms // ¡CORREGIDO! Asegúrate de que este sea el nombre de tu paquete
+package com.example.proteccionsms // Asegúrate de que este sea el nombre de tu paquete
 
 import android.content.Intent
 import android.service.notification.NotificationListenerService
@@ -14,8 +14,11 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject // Necesario para manejar JSON
-import kotlinx.coroutines.cancel // ¡IMPORTACIÓN AÑADIDA PARA LA FUNCIÓN CANCEL!
-import com.example.proteccionsms.BlockedMessageCounter // ¡CORREGIDO! Importación correcta para BlockedMessageCounter
+import kotlinx.coroutines.cancel // Importación para la función cancel
+import com.example.proteccionsms.BlockedMessageCounter // Importación correcta para BlockedMessageCounter
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 /**
  * Servicio que escucha las notificaciones del sistema.
@@ -55,7 +58,7 @@ class MyNotificationListenerService : NotificationListenerService() {
                 // Asegurarse de que las actualizaciones de UI se envíen al hilo principal.
                 withContext(Dispatchers.Main) {
                     // Asegúrate de que el nombre del paquete en el Intent coincida con tu paquete principal
-                    val intent = Intent("com.example.proteccionsms.NOTIFICATION_RECEIVED_ACTION") // ¡CORREGIDO! Verifica este paquete
+                    val intent = Intent("com.example.proteccionsms.NOTIFICATION_RECEIVED_ACTION")
                     intent.putExtra("notification_text", notificationInfo)
                     sendBroadcast(intent)
                 }
@@ -108,8 +111,14 @@ class MyNotificationListenerService : NotificationListenerService() {
         // 2. Verificación a través de API externa
         return try {
             val jsonMediaType = "application/json; charset=utf-8".toMediaTypeOrNull()
+
+            // Obtener la fecha y hora actual en un formato ISO 8601
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.getDefault())
+            val currentDateTime = dateFormat.format(Date())
+
             val jsonBody = JSONObject().apply {
                 put("mensaje", fullNotificationContent)
+                put("fechaHora", currentDateTime) // ¡Campo de fecha y hora añadido!
             }.toString()
 
             val requestBody = jsonBody.toRequestBody(jsonMediaType)
